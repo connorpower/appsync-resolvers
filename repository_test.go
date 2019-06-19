@@ -24,10 +24,10 @@ var _ = Describe("Repository", func() {
 	r.Add("example.resolver.with.error", func(arg arguments) (response, error) { return response{"bar"}, errors.New("Has Error") })
 	r.Add("example.resolver.with.identity.with.error", func(arg arguments, ident identity) (response, error) { return response{"foo"}, errors.New("Has Error") })
 
-	Context("Matching invocation", func() {
-		res, err := r.Handle(invocation{
+	Context("Matching Invocation", func() {
+		res, err := r.Handle(Invocation{
 			Resolve: "example.resolver",
-			Context: context{
+			Context: Context{
 				Arguments: json.RawMessage(`{"bar":"foo"}`),
 			},
 		})
@@ -41,11 +41,11 @@ var _ = Describe("Repository", func() {
 		})
 	})
 
-	Context("Matching invocation with identity", func() {
+	Context("Matching Invocation with identity", func() {
 		identityMessage := json.RawMessage(`{"bar":"foo"}`)
-		res, err := r.Handle(invocation{
+		res, err := r.Handle(Invocation{
 			Resolve: "example.resolver.with.identity",
-			Context: context{
+			Context: Context{
 				Arguments: json.RawMessage(`{"bar":"foo"}`),
 				Identity:  &identityMessage,
 			},
@@ -60,10 +60,10 @@ var _ = Describe("Repository", func() {
 		})
 	})
 
-	Context("Matching invocation with error", func() {
-		_, err := r.Handle(invocation{
+	Context("Matching Invocation with error", func() {
+		_, err := r.Handle(Invocation{
 			Resolve: "example.resolver.with.error",
-			Context: context{
+			Context: Context{
 				Arguments: json.RawMessage(`{"bar":"foo"}`),
 			},
 		})
@@ -73,11 +73,11 @@ var _ = Describe("Repository", func() {
 		})
 	})
 
-	Context("Matching invocation with identity and error", func() {
+	Context("Matching Invocation with identity and error", func() {
 		identityMessage := json.RawMessage(`{"bar:foo"}`)
-		_, err := r.Handle(invocation{
+		_, err := r.Handle(Invocation{
 			Resolve: "example.resolver.with.identity.with.error",
-			Context: context{
+			Context: Context{
 				Arguments: json.RawMessage(`{"bar":"foo"}`),
 				Identity:  &identityMessage,
 			},
@@ -88,10 +88,10 @@ var _ = Describe("Repository", func() {
 		})
 	})
 
-	Context("Matching invocation with invalid payload", func() {
-		_, err := r.Handle(invocation{
+	Context("Matching Invocation with invalid payload", func() {
+		_, err := r.Handle(Invocation{
 			Resolve: "example.resolver.with.error",
-			Context: context{
+			Context: Context{
 				Arguments: json.RawMessage(`{"bar:foo"}`),
 			},
 		})
@@ -101,10 +101,10 @@ var _ = Describe("Repository", func() {
 		})
 	})
 
-	Context("Not matching invocation", func() {
-		res, err := r.Handle(invocation{
+	Context("Not matching Invocation", func() {
+		res, err := r.Handle(Invocation{
 			Resolve: "example.resolver.not.found",
-			Context: context{
+			Context: Context{
 				Arguments: json.RawMessage(`{"bar":"foo"}`),
 			},
 		})

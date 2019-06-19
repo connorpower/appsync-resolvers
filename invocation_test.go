@@ -9,9 +9,9 @@ import (
 
 var _ = Describe("Invocation", func() {
 	Context("With Arguments", func() {
-		data := invocation{
+		data := Invocation{
 			Resolve: "exaple.resolver",
-			Context: context{
+			Context: Context{
 				Arguments: json.RawMessage(`{ "foo": "bar" }`),
 			},
 		}
@@ -26,9 +26,9 @@ var _ = Describe("Invocation", func() {
 	})
 
 	Context("With Source", func() {
-		data := invocation{
+		data := Invocation{
 			Resolve: "exaple.resolver",
-			Context: context{
+			Context: Context{
 				Source: json.RawMessage(`{ "bar": "foo" }`),
 			},
 		}

@@ -20,7 +20,7 @@ func (r Repository) Add(resolve string, handler interface{}) error {
 }
 
 // Handle responds to the AppSync request
-func (r Repository) Handle(in invocation) (interface{}, error) {
+func (r Repository) Handle(in Invocation) (interface{}, error) {
 	handler, found := r[in.Resolve]
 
 	if found {
